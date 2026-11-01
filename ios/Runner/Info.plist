@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Take a photo of a medicine so reminders show what it looks like.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Choose a photo of a medicine so reminders show what it looks like.</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>ar</string>
+	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>

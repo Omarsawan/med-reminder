@@ -1,0 +1,411 @@
+{
+  "@@locale": "en",
+  "appTitle": "Med Reminder",
+  "navToday": "Today",
+  "navMedicines": "Medicines",
+  "navHistory": "History",
+  "navSettings": "Settings",
+  "welcomeTitle": "Who takes medicines?",
+  "welcomeBody": "Add everyone you manage medicines for. You can change this later.",
+  "personNameHint": "Name, e.g. Mom",
+  "add": "Add",
+  "continueLabel": "Continue",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "edit": "Edit",
+  "undo": "Undo",
+  "todayEmptyTitle": "No medicines yet",
+  "todayEmptyBody": "Add a medicine and its reminders will show up here.",
+  "addMedicine": "Add medicine",
+  "noDosesToday": "Nothing scheduled for today.",
+  "everyone": "Everyone",
+  "markAllTaken": "All taken",
+  "taken": "Taken",
+  "skip": "Skip",
+  "snooze": "Snooze",
+  "takenAt": "Taken {time}",
+  "@takenAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "skipped": "Skipped",
+  "stateDue": "Due now",
+  "stateMissed": "Missed",
+  "stateUpcoming": "Upcoming",
+  "stateDone": "Done",
+  "asNeededSection": "As needed",
+  "takeNow": "Take now",
+  "lastTaken": "Last taken {time}",
+  "@lastTaken": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "nextAllowedAt": "Next dose from {time}",
+  "@nextAllowedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "tooSoonTitle": "Too soon?",
+  "tooSoonBody": "The last dose was at {time}. Keep at least {hours} hours between doses. Take it anyway?",
+  "@tooSoonBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "maxPerDayBody": "Already taken {count} times today (limit {max}). Take it anyway?",
+  "@maxPerDayBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "takeAnyway": "Take anyway",
+  "lowStock": "{name}: only {amount} left. Time to refill.",
+  "@lowStock": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "dosesTakenOf": "{done} of {total} taken",
+  "@dosesTakenOf": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "editMedicine": "Edit medicine",
+  "newMedicine": "New medicine",
+  "addPhoto": "Add a photo",
+  "photoHelp": "A photo of the pill or box shows on every reminder.",
+  "takePhoto": "Take photo",
+  "chooseFromGallery": "Choose from gallery",
+  "removePhoto": "Remove photo",
+  "medicineName": "Medicine name",
+  "nameRequired": "Enter a name",
+  "whoTakesIt": "Who takes it?",
+  "addPerson": "Add person",
+  "colorTag": "Colour tag",
+  "typeAndDose": "Type and dose",
+  "whenToTake": "When",
+  "scheduleDaily": "Every day",
+  "scheduleInterval": "Every few hours",
+  "scheduleWeekdays": "Some days",
+  "scheduleAsNeeded": "As needed",
+  "presetTimes": "{count, plural, =1{Once} =2{Twice} other{{count} times}}",
+  "@presetTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "addTime": "Add time",
+  "everyHours": "{count, plural, =1{Every hour} other{Every {count} hours}}",
+  "@everyHours": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "firstDoseAt": "First dose at",
+  "minGapLabel": "Hours between doses (at least)",
+  "maxPerDayLabel": "Max per day",
+  "noLimit": "No limit",
+  "pickDays": "Pick at least one day",
+  "pickTimes": "Add at least one time",
+  "pickPerson": "Choose who takes it",
+  "durationLabel": "How long",
+  "ongoing": "Ongoing",
+  "forSetDays": "Set number of days",
+  "daysCount": "{count, plural, =1{1 day} other{{count} days}}",
+  "@daysCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "startsOn": "Starts {date}",
+  "@startsOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "instructions": "Instructions",
+  "instrNone": "None",
+  "instrBeforeFood": "Before food",
+  "instrWithFood": "With food",
+  "instrAfterFood": "After food",
+  "instrEmptyStomach": "Empty stomach",
+  "instrBedtime": "At bedtime",
+  "trackStock": "Track how many are left",
+  "stockLeft": "Left now",
+  "warnAt": "Warn at",
+  "notes": "Notes (optional)",
+  "pauseReminders": "Pause reminders",
+  "deleteTitle": "Delete {name}?",
+  "@deleteTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteMedicineBody": "Its reminders and history will be removed.",
+  "noColor": "None",
+  "medicinesEmpty": "No medicines yet. Tap + to add one.",
+  "paused": "Paused",
+  "finished": "Course finished",
+  "leftCount": "{amount} left",
+  "@leftCount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "daysLeft": "{count, plural, =1{Last day} other{{count} days left}}",
+  "@daysLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "everyHoursFrom": "{every} from {time}",
+  "@everyHoursFrom": {
+    "placeholders": {
+      "every": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "asNeededSummary": "As needed · {hours}h apart",
+  "@asNeededSummary": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "historyEmpty": "Nothing recorded yet.",
+  "language": "Language",
+  "systemLanguage": "Phone language",
+  "remindersSection": "Reminders",
+  "followUp": "Repeat if not marked",
+  "off": "Off",
+  "minutesShort": "{count} min",
+  "@minutesShort": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "followUpCount": "Repeat up to",
+  "timesCount": "{count, plural, =1{once} =2{twice} other{{count} times}}",
+  "@timesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "snoozeFor": "Snooze for",
+  "people": "People",
+  "reminderCheck": "Reminder check",
+  "notificationsAllowed": "Notifications allowed",
+  "exactAlarms": "On-time alarms",
+  "batteryUnrestricted": "Not cancelled by battery saver",
+  "fix": "Fix",
+  "batteryHelp": "Reminders are handed to the phone's alarm system, so this app never runs in the background and uses almost no battery. Some phones (Samsung, Xiaomi, Huawei) still cancel alarms of \"optimised\" apps. If reminders go missing, set this app to Unrestricted.",
+  "sendTestReminder": "Send a test reminder",
+  "testReminderSent": "A test reminder will appear in 5 seconds.",
+  "personName": "Name",
+  "deletePersonBlocked": "Delete or move {name}'s medicines first.",
+  "@deletePersonBlocked": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "notifTitle": "{time} · Time for medicine",
+  "@notifTitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "notifFollowUpTitle": "Reminder: {time} doses not marked yet",
+  "@notifFollowUpTitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "notifOpenAppTitle": "Open Med Reminder",
+  "notifOpenAppBody": "Open the app so your next reminders keep coming.",
+  "channelName": "Medicine reminders",
+  "channelDescription": "Reminders to take medicines on time",
+  "testMedicine": "Test medicine",
+  "allDone": "All done for this time",
+  "requiredField": "Required",
+  "unitTablet": "{count, plural, =1{{amount} tablet} other{{amount} tablets}}",
+  "@unitTablet": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "unitCapsule": "{count, plural, =1{{amount} capsule} other{{amount} capsules}}",
+  "@unitCapsule": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "unitMl": "{count, plural, other{{amount} ml}}",
+  "@unitMl": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "unitDrop": "{count, plural, =1{{amount} drop} other{{amount} drops}}",
+  "@unitDrop": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "unitPuff": "{count, plural, =1{{amount} puff} other{{amount} puffs}}",
+  "@unitPuff": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "unitUnit": "{count, plural, =1{{amount} unit} other{{amount} units}}",
+  "@unitUnit": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "unitSachet": "{count, plural, =1{{amount} sachet} other{{amount} sachets}}",
+  "@unitSachet": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "unitApplication": "{count, plural, =1{Apply once} other{Apply {amount} times}}",
+  "@unitApplication": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "nameTablet": "Tablet",
+  "nameCapsule": "Capsule",
+  "nameMl": "Liquid (ml)",
+  "nameDrop": "Drops",
+  "namePuff": "Inhaler",
+  "nameUnit": "Injection",
+  "nameSachet": "Sachet",
+  "nameApplication": "Cream",
+  "scheduleEveryNDays": "Every few days",
+  "everyDays": "{count, plural, =1{Every day} =2{Every other day} other{Every {count} days}}",
+  "@everyDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "firstDoseOn": "First dose on {date}",
+  "@firstDoseOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "nextDoseOn": "next {date}",
+  "@nextDoseOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  }
+}
