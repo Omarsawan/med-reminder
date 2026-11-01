@@ -400,10 +400,37 @@
       }
     }
   },
-  "nextDoseOn": "next {date}",
-  "@nextDoseOn": {
+  "familySharing": "Family sharing",
+  "familyIntro": "Share medicines, photos and doses with another phone, so you both see what was taken.",
+  "createFamily": "Create a family code",
+  "joinFamily": "Join with a code",
+  "familyCode": "Family code",
+  "familyCodeHelp": "On the other phone, open Settings → Family sharing → Join with a code, and type this code.",
+  "enterCode": "Family code from the other phone",
+  "join": "Join",
+  "joinMergeNote": "Anything already on this phone is added to the family's list.",
+  "leaveFamily": "Stop sharing on this phone",
+  "leaveFamilyBody": "This phone keeps its data but stops sending and receiving changes.",
+  "syncSynced": "Up to date",
+  "syncOffline": "Offline. Changes will be sent when you're back online.",
+  "syncConnecting": "Connecting…",
+  "syncError": "Sync problem. It will retry next time the app opens.",
+  "syncUnavailable": "Sharing isn't set up in this version of the app.",
+  "syncOff": "Not shared",
+  "badCode": "That code wasn't found. Check it and try again.",
+  "networkError": "Couldn't connect. Check the internet and try again.",
+  "codeCopied": "Code copied",
+  "copy": "Copy",
+  "remindFor": "Remind on this phone for",
+  "remindForHelp": "Each phone chooses for itself. Doses marked on one phone show on the other when its app is opened.",
+  "joinFromWelcome": "Already using the app on another phone? Join with a family code",
+  "dueToday": "Due today",
+  "notDueToday": "Not due today",
+  "pausedOrFinished": "Paused or finished",
+  "nextDue": "Next: {when}",
+  "@nextDue": {
     "placeholders": {
-      "date": {
+      "when": {
         "type": "String"
       }
     }

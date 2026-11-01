@@ -962,11 +962,173 @@ abstract class AppLocalizations {
   /// **'First dose on {date}'**
   String firstDoseOn(String date);
 
-  /// No description provided for @nextDoseOn.
+  /// No description provided for @familySharing.
   ///
   /// In en, this message translates to:
-  /// **'next {date}'**
-  String nextDoseOn(String date);
+  /// **'Family sharing'**
+  String get familySharing;
+
+  /// No description provided for @familyIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Share medicines, photos and doses with another phone, so you both see what was taken.'**
+  String get familyIntro;
+
+  /// No description provided for @createFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a family code'**
+  String get createFamily;
+
+  /// No description provided for @joinFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Join with a code'**
+  String get joinFamily;
+
+  /// No description provided for @familyCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Family code'**
+  String get familyCode;
+
+  /// No description provided for @familyCodeHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'On the other phone, open Settings → Family sharing → Join with a code, and type this code.'**
+  String get familyCodeHelp;
+
+  /// No description provided for @enterCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Family code from the other phone'**
+  String get enterCode;
+
+  /// No description provided for @join.
+  ///
+  /// In en, this message translates to:
+  /// **'Join'**
+  String get join;
+
+  /// No description provided for @joinMergeNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Anything already on this phone is added to the family\'s list.'**
+  String get joinMergeNote;
+
+  /// No description provided for @leaveFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop sharing on this phone'**
+  String get leaveFamily;
+
+  /// No description provided for @leaveFamilyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone keeps its data but stops sending and receiving changes.'**
+  String get leaveFamilyBody;
+
+  /// No description provided for @syncSynced.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to date'**
+  String get syncSynced;
+
+  /// No description provided for @syncOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline. Changes will be sent when you\'re back online.'**
+  String get syncOffline;
+
+  /// No description provided for @syncConnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting…'**
+  String get syncConnecting;
+
+  /// No description provided for @syncError.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync problem. It will retry next time the app opens.'**
+  String get syncError;
+
+  /// No description provided for @syncUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Sharing isn\'t set up in this version of the app.'**
+  String get syncUnavailable;
+
+  /// No description provided for @syncOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Not shared'**
+  String get syncOff;
+
+  /// No description provided for @badCode.
+  ///
+  /// In en, this message translates to:
+  /// **'That code wasn\'t found. Check it and try again.'**
+  String get badCode;
+
+  /// No description provided for @networkError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t connect. Check the internet and try again.'**
+  String get networkError;
+
+  /// No description provided for @codeCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Code copied'**
+  String get codeCopied;
+
+  /// No description provided for @copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get copy;
+
+  /// No description provided for @remindFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind on this phone for'**
+  String get remindFor;
+
+  /// No description provided for @remindForHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Each phone chooses for itself. Doses marked on one phone show on the other when its app is opened.'**
+  String get remindForHelp;
+
+  /// No description provided for @joinFromWelcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Already using the app on another phone? Join with a family code'**
+  String get joinFromWelcome;
+
+  /// No description provided for @dueToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Due today'**
+  String get dueToday;
+
+  /// No description provided for @notDueToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Not due today'**
+  String get notDueToday;
+
+  /// No description provided for @pausedOrFinished.
+  ///
+  /// In en, this message translates to:
+  /// **'Paused or finished'**
+  String get pausedOrFinished;
+
+  /// No description provided for @nextDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {when}'**
+  String nextDue(String when);
 }
 
 class _AppLocalizationsDelegate

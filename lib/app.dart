@@ -36,7 +36,9 @@ class _MedAppState extends State<MedApp> with WidgetsBindingObserver {
   // button may have marked doses while the app was in the background.
   @override
   void didChangeAppLifecycleState(AppLifecycleState s) {
-    if (s == AppLifecycleState.resumed) context.read<AppState>().refresh();
+    final state = context.read<AppState>();
+    if (s == AppLifecycleState.resumed) state.refresh();
+    if (s == AppLifecycleState.paused) state.pause();
   }
 
   @override

@@ -1,15 +1,21 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 
 import '../data/repository.dart';
 import '../logic/env.dart';
 import '../models/models.dart';
 import '../models/settings.dart';
+import '../sync/sync_service.dart';
 
 /// What the screens show, reloaded from the database after every change.
 class AppState extends ChangeNotifier {
-  AppState(this.env);
+  AppState(this.env, this.sync) {
+    sync.onRemoteChange = _onRemoteChange;
+  }
 
   final Env env;
+  final SyncService sync;
 
   List<Person> people = [];
   List<Medicine> medicines = [];
@@ -57,14 +63,35 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Reloads the screens and hands the new schedule to the OS.
+  /// Reloads the screens, hands the new schedule to the OS and shares the
+  /// change with the family's other phones.
   Future<void> _changed() async {
     await load();
+    unawaited(sync.push());
     await env.reminders.rescheduleAll();
   }
 
-  /// Called when the app comes back to the foreground.
-  Future<void> refresh() => _changed();
+  /// Called when the app comes back to the foreground: picks up doses marked
+  /// from notifications while it was closed, and resumes sync.
+  Future<void> refresh() async {
+    await _changed();
+    await sync.start();
+  }
+
+  /// Called when the app goes to the background: sync stops so nothing runs
+  /// while the app isn't in use.
+  Future<void> pause() => sync.stop();
+
+  Future<void> _onRemoteChange() async {
+    await load();
+    // Doses marked on the other phone: drop this phone's reminders for them.
+    for (final slot in today.map((d) => d.at).toSet()) {
+      if (today.where((d) => d.at == slot).every((d) => !d.isPending)) {
+        await env.reminders.clearSlot(slot);
+      }
+    }
+    await env.reminders.rescheduleAll();
+  }
 
   Future<void> saveSettings(AppSettings s) async {
     await env.service.saveSettings(s);

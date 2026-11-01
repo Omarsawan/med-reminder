@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 
 import '../../logic/reminders.dart';
 import '../../state/app_state.dart';
+import '../../sync/sync_service.dart';
 import '../widgets/common.dart';
+import 'family_screen.dart';
 import 'people_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -45,6 +47,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   @override
   Widget build(BuildContext context) {
     final state = context.watch<AppState>();
+    final sync = context.watch<SyncService>();
     final reminders = state.env.reminders;
     final s = state.settings;
     final l = context.l;
@@ -88,6 +91,16 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
         children: [
+          SectionTitle(l.familySharing),
+          Card(
+            child: ListTile(
+              leading: syncStatusIcon(context, sync.status),
+              title: Text(l.familySharing),
+              subtitle: Text(syncStatusText(context, sync.status)),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const FamilyScreen())),
+            ),
+          ),
           SectionTitle(l.people),
           Card(
             child: ListTile(
@@ -103,6 +116,35 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
             s.language,
             (v) => state.saveSettings(s.copyWith(language: v)),
           ),
+          if (state.people.length > 1) ...[
+            SectionTitle(l.remindFor),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (final p in state.people)
+                  FilterChip(
+                    avatar: CircleAvatar(backgroundColor: Color(p.color), radius: 7),
+                    label: Text(p.name),
+                    selected: s.remindsFor(p.id),
+                    onSelected: (on) {
+                      final chosen = {
+                        for (final other in state.people)
+                          if (other.id == p.id ? on : s.remindsFor(other.id)) other.id,
+                      };
+                      // Everyone selected is stored as "everyone", so people
+                      // added later are included automatically.
+                      final all = chosen.length == state.people.length;
+                      state.saveSettings(s.copyWith(remindPeople: () => all ? null : chosen));
+                    },
+                  ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: Text(l.remindForHelp, style: theme.textTheme.bodySmall),
+            ),
+          ],
           SectionTitle(l.followUp),
           choices(
             [(0, l.off), for (final m in [5, 10, 15, 30]) (m, l.minutesShort(m))],

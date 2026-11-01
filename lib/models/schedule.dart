@@ -143,6 +143,17 @@ class Schedule {
     }
   }
 
+  /// The first dose at or after [from], or null if there is none within a
+  /// year (as-needed, or a finished course). Looks in widening windows so
+  /// daily schedules don't compute a year of doses.
+  DateTime? nextAfter(DateTime from) {
+    for (final days in const [2, 32, 400]) {
+      final found = occurrences(from, from.add(Duration(days: days)));
+      if (found.isNotEmpty) return found.first;
+    }
+    return null;
+  }
+
   Schedule copyWith({
     ScheduleType? type,
     List<DoseTime>? times,

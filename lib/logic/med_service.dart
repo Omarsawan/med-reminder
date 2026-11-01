@@ -36,7 +36,7 @@ class MedService {
     final med = await _freshMedicine(dose.medicine.id) ?? dose.medicine;
     final amount = status == LogStatus.taken ? med.amount : 0.0;
     await repo.saveLog(DoseLog(
-      id: newId(),
+      id: Repository.logId(med.id, dose.at),
       medicineId: med.id,
       scheduledAt: dose.at,
       status: status,
@@ -67,7 +67,7 @@ class MedService {
   Future<void> takeAsNeeded(Medicine med) async {
     final now = DateTime.now();
     await repo.saveLog(DoseLog(
-      id: newId(),
+      id: Repository.logId(med.id, now),
       medicineId: med.id,
       scheduledAt: now,
       status: LogStatus.taken,

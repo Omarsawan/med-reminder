@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 1.1.0+2
 
 environment:
   sdk: ^3.13.7
@@ -46,6 +46,15 @@ dependencies:
   intl: ^0.20.3
   flutter_localizations:
     sdk: flutter
+  # Pinned: newer versions pull firebase-ios-sdk 12.15+, which needs Xcode 26
+  # (Swift tools 6.2). Raise together once the Mac has Xcode 26.
+  firebase_core: 4.10.0
+  # firebase_core's native code must match its platform interface exactly;
+  # 7.1.0 belongs to firebase_core 4.11.0 and fails to decode with 4.10.0.
+  firebase_core_platform_interface: 7.0.1
+  firebase_core_web: 3.8.0
+  firebase_auth: ^6.5.2
+  cloud_firestore: ^6.5.0
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +66,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
+  sqflite_common_ffi: ^2.4.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -100,3 +110,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+# sqflite_common_ffi (tests only) pulls in sqlite3, whose build hook would
+# otherwise download a SQLite binary during every app build. The app uses the
+# phone's own SQLite through sqflite; tests use the Mac's.
+hooks:
+  user_defines:
+    sqlite3:
+      source: system

@@ -617,7 +617,94 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String nextDoseOn(String date) {
-    return 'التالية $date';
+  String get familySharing => 'مشاركة العائلة';
+
+  @override
+  String get familyIntro =>
+      'شارك الأدوية والصور والجرعات مع هاتف آخر لتريا معًا ما تم أخذه.';
+
+  @override
+  String get createFamily => 'إنشاء رمز للعائلة';
+
+  @override
+  String get joinFamily => 'الانضمام برمز';
+
+  @override
+  String get familyCode => 'رمز العائلة';
+
+  @override
+  String get familyCodeHelp =>
+      'على الهاتف الآخر افتح الإعدادات ← مشاركة العائلة ← الانضمام برمز، واكتب هذا الرمز.';
+
+  @override
+  String get enterCode => 'رمز العائلة من الهاتف الآخر';
+
+  @override
+  String get join => 'انضمام';
+
+  @override
+  String get joinMergeNote =>
+      'ما هو موجود على هذا الهاتف سيُضاف إلى قائمة العائلة.';
+
+  @override
+  String get leaveFamily => 'إيقاف المشاركة على هذا الهاتف';
+
+  @override
+  String get leaveFamilyBody =>
+      'سيحتفظ هذا الهاتف ببياناته لكنه سيتوقف عن إرسال التغييرات واستقبالها.';
+
+  @override
+  String get syncSynced => 'محدّث';
+
+  @override
+  String get syncOffline => 'غير متصل. ستُرسل التغييرات عند عودة الاتصال.';
+
+  @override
+  String get syncConnecting => 'جارٍ الاتصال…';
+
+  @override
+  String get syncError => 'مشكلة في المزامنة. ستُعاد المحاولة عند فتح التطبيق.';
+
+  @override
+  String get syncUnavailable => 'المشاركة غير مفعّلة في هذا الإصدار.';
+
+  @override
+  String get syncOff => 'غير مشترك';
+
+  @override
+  String get badCode => 'لم يُعثر على هذا الرمز. تحقق منه وحاول مجددًا.';
+
+  @override
+  String get networkError => 'تعذّر الاتصال. تحقق من الإنترنت وحاول مجددًا.';
+
+  @override
+  String get codeCopied => 'تم نسخ الرمز';
+
+  @override
+  String get copy => 'نسخ';
+
+  @override
+  String get remindFor => 'التذكير على هذا الهاتف لـ';
+
+  @override
+  String get remindForHelp =>
+      'كل هاتف يختار لنفسه. الجرعات المسجلة على هاتف تظهر على الآخر عند فتح التطبيق.';
+
+  @override
+  String get joinFromWelcome =>
+      'تستخدم التطبيق على هاتف آخر؟ انضم برمز العائلة';
+
+  @override
+  String get dueToday => 'مستحق اليوم';
+
+  @override
+  String get notDueToday => 'غير مستحق اليوم';
+
+  @override
+  String get pausedOrFinished => 'متوقف أو منتهٍ';
+
+  @override
+  String nextDue(String when) {
+    return 'التالي: $when';
   }
 }

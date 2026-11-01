@@ -187,7 +187,7 @@ class Reminders {
       now.add(const Duration(days: 7)),
     );
     final slots = SplayTreeMap<DateTime, List<Dose>>();
-    for (final d in doses.where((d) => d.isPending)) {
+    for (final d in doses.where((d) => d.isPending && settings.remindsFor(d.medicine.personId))) {
       (slots[d.at] ??= []).add(d);
     }
     final snoozes = await service.snoozes();

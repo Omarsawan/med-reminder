@@ -97,11 +97,11 @@ class Fmt {
     return '$base · ${l.daysLeft(left)}';
   }
 
-  /// "Every 30 days · 9:00 AM · next Sat, Nov 28"
-  String _everyNDays(Schedule s, DateTime now) {
-    final parts = [l.everyDays(s.intervalDays), s.times.map(doseTime).join(', ')];
-    final next = s.occurrences(now, now.add(Duration(days: s.intervalDays + 1))).firstOrNull;
-    if (next != null) parts.add(l.nextDoseOn(date(next)));
-    return parts.join(' · ');
-  }
+  /// "Every 30 days · 9:00 AM"
+  String _everyNDays(Schedule s, DateTime now) =>
+      [l.everyDays(s.intervalDays), s.times.map(doseTime).join(', ')].join(' · ');
+
+  /// "Wed, Nov 18 · 5:00 PM", or just the time when it's today.
+  String when(DateTime t, DateTime now) =>
+      dateOnly(t) == dateOnly(now) ? time(t) : '${date(t)} · ${time(t)}';
 }

@@ -99,6 +99,44 @@ class PersonChip extends StatelessWidget {
   }
 }
 
+/// "Everyone" plus one chip per person. Hidden when there's only one person.
+class PersonFilter extends StatelessWidget {
+  const PersonFilter({super.key, required this.selected, required this.onChanged});
+
+  /// Selected person id, or null for everyone.
+  final String? selected;
+  final ValueChanged<String?> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final people = context.watch<AppState>().people;
+    if (people.length < 2) return const SizedBox.shrink();
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        children: [
+          ChoiceChip(
+            label: Text(context.l.everyone),
+            selected: selected == null,
+            onSelected: (_) => onChanged(null),
+          ),
+          for (final p in people)
+            Padding(
+              padding: const EdgeInsetsDirectional.only(start: 8),
+              child: ChoiceChip(
+                avatar: CircleAvatar(backgroundColor: Color(p.color), radius: 6),
+                label: Text(p.name),
+                selected: selected == p.id,
+                onSelected: (_) => onChanged(p.id),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
 class ColorPicker extends StatelessWidget {
   const ColorPicker({super.key, required this.value, required this.onChanged, this.allowNone = false});
 

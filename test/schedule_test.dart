@@ -125,6 +125,29 @@ void main() {
     });
   });
 
+  group('next dose', () {
+    test('later today for a daily medicine', () {
+      final s = Schedule(type: ScheduleType.daily, times: const [DoseTime(8, 0), DoseTime(20, 0)], startDate: monday);
+      expect(s.nextAfter(DateTime(2026, 11, 2, 9)), DateTime(2026, 11, 2, 20));
+    });
+
+    test('weeks away for a monthly injection', () {
+      final s = Schedule(
+        type: ScheduleType.everyNDays,
+        intervalDays: 30,
+        times: const [DoseTime(17, 0)],
+        startDate: DateTime(2026, 10, 19),
+      );
+      expect(s.nextAfter(DateTime(2026, 11, 1, 14)), DateTime(2026, 11, 18, 17));
+    });
+
+    test('none once a course is over, or for as-needed', () {
+      final course = Schedule(type: ScheduleType.daily, times: const [DoseTime(9, 0)], startDate: monday, durationDays: 2);
+      expect(course.nextAfter(DateTime(2026, 11, 5)), isNull);
+      expect(Schedule(type: ScheduleType.asNeeded, startDate: monday).nextAfter(monday), isNull);
+    });
+  });
+
   test('as-needed medicines have no scheduled doses', () {
     final s = Schedule(type: ScheduleType.asNeeded, startDate: monday);
     expect(s.occurrences(monday, monday.add(const Duration(days: 7))), isEmpty);

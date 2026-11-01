@@ -594,7 +594,98 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String nextDoseOn(String date) {
-    return 'next $date';
+  String get familySharing => 'Family sharing';
+
+  @override
+  String get familyIntro =>
+      'Share medicines, photos and doses with another phone, so you both see what was taken.';
+
+  @override
+  String get createFamily => 'Create a family code';
+
+  @override
+  String get joinFamily => 'Join with a code';
+
+  @override
+  String get familyCode => 'Family code';
+
+  @override
+  String get familyCodeHelp =>
+      'On the other phone, open Settings → Family sharing → Join with a code, and type this code.';
+
+  @override
+  String get enterCode => 'Family code from the other phone';
+
+  @override
+  String get join => 'Join';
+
+  @override
+  String get joinMergeNote =>
+      'Anything already on this phone is added to the family\'s list.';
+
+  @override
+  String get leaveFamily => 'Stop sharing on this phone';
+
+  @override
+  String get leaveFamilyBody =>
+      'This phone keeps its data but stops sending and receiving changes.';
+
+  @override
+  String get syncSynced => 'Up to date';
+
+  @override
+  String get syncOffline =>
+      'Offline. Changes will be sent when you\'re back online.';
+
+  @override
+  String get syncConnecting => 'Connecting…';
+
+  @override
+  String get syncError =>
+      'Sync problem. It will retry next time the app opens.';
+
+  @override
+  String get syncUnavailable =>
+      'Sharing isn\'t set up in this version of the app.';
+
+  @override
+  String get syncOff => 'Not shared';
+
+  @override
+  String get badCode => 'That code wasn\'t found. Check it and try again.';
+
+  @override
+  String get networkError =>
+      'Couldn\'t connect. Check the internet and try again.';
+
+  @override
+  String get codeCopied => 'Code copied';
+
+  @override
+  String get copy => 'Copy';
+
+  @override
+  String get remindFor => 'Remind on this phone for';
+
+  @override
+  String get remindForHelp =>
+      'Each phone chooses for itself. Doses marked on one phone show on the other when its app is opened.';
+
+  @override
+  String get joinFromWelcome =>
+      'Already using the app on another phone? Join with a family code';
+
+  @override
+  String get dueToday => 'Due today';
+
+  @override
+  String get notDueToday => 'Not due today';
+
+  @override
+  String get pausedOrFinished => 'Paused or finished';
+
+  @override
+  String nextDue(String when) {
+    return 'Next: $when';
   }
 }

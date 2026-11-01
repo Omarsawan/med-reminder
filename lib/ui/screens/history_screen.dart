@@ -65,30 +65,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           return ListView(
             padding: const EdgeInsets.fromLTRB(12, 0, 12, 24),
             children: [
-              if (state.people.length > 1)
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Row(
-                    children: [
-                      ChoiceChip(
-                        label: Text(l.everyone),
-                        selected: _personId == null,
-                        onSelected: (_) => setState(() => _personId = null),
-                      ),
-                      for (final p in state.people)
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(start: 8),
-                          child: ChoiceChip(
-                            avatar: CircleAvatar(backgroundColor: Color(p.color), radius: 6),
-                            label: Text(p.name),
-                            selected: _personId == p.id,
-                            onSelected: (_) => setState(() => _personId = p.id),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
+              PersonFilter(selected: _personId, onChanged: (id) => setState(() => _personId = id)),
               if (days.isEmpty)
                 Padding(
                   padding: const EdgeInsets.all(32),

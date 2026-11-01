@@ -12,16 +12,20 @@ String newId() => _uuid.v4();
 /// Local storage. People and medicines are stored as JSON documents so the
 /// schema rarely needs migrating; logs get real columns because they are
 /// queried by time.
+///
+/// Every row has a `dirty` flag: set by local changes, cleared once the change
+/// is handed to sync. Changes that arrive from another phone are stored clean.
 class Repository {
   Repository._(this._db);
 
   final Database _db;
 
-  static Future<Repository> open() async {
-    final path = p.join(await getDatabasesPath(), 'med_reminder.db');
+  /// [path] is for tests; the app uses its standard database location.
+  static Future<Repository> open({String? path}) async {
+    path ??= p.join(await getDatabasesPath(), 'med_reminder.db');
     final db = await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: (db, _) async {
         for (final table in ['people', 'medicines']) {
           await db.execute('''
@@ -29,7 +33,8 @@ class Repository {
               id TEXT PRIMARY KEY,
               data TEXT NOT NULL,
               updated_at INTEGER NOT NULL,
-              deleted INTEGER NOT NULL DEFAULT 0
+              deleted INTEGER NOT NULL DEFAULT 0,
+              dirty INTEGER NOT NULL DEFAULT 1
             )''');
         }
         await db.execute('''
@@ -42,10 +47,22 @@ class Repository {
             amount REAL NOT NULL,
             updated_at INTEGER NOT NULL,
             deleted INTEGER NOT NULL DEFAULT 0,
+            dirty INTEGER NOT NULL DEFAULT 1,
             UNIQUE (medicine_id, scheduled_at)
           )''');
         await db.execute('CREATE INDEX logs_by_time ON logs (scheduled_at)');
         await db.execute('CREATE TABLE settings (key TEXT PRIMARY KEY, value TEXT NOT NULL)');
+      },
+      onUpgrade: (db, from, _) async {
+        if (from < 2) {
+          // Sync support: everything existing counts as not yet synced, and a
+          // dose's log id is derived from the dose so two phones marking the
+          // same dose update the same record.
+          for (final table in ['people', 'medicines', 'logs']) {
+            await db.execute('ALTER TABLE $table ADD COLUMN dirty INTEGER NOT NULL DEFAULT 1');
+          }
+          await db.execute("UPDATE logs SET id = medicine_id || '_' || scheduled_at");
+        }
       },
     );
     return Repository._(db);
@@ -102,7 +119,7 @@ class Repository {
   Future<void> saveLog(DoseLog log) => _db.insert(
         'logs',
         {
-          'id': log.id,
+          'id': logId(log.medicineId, log.scheduledAt),
           'medicine_id': log.medicineId,
           'scheduled_at': log.scheduledAt.millisecondsSinceEpoch,
           'status': log.status.name,
@@ -110,11 +127,61 @@ class Repository {
           'amount': log.amount,
           'updated_at': DateTime.now().millisecondsSinceEpoch,
           'deleted': 0,
+          'dirty': 1,
         },
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
 
-  Future<void> deleteLog(String id) => _db.delete('logs', where: 'id = ?', whereArgs: [id]);
+  // Soft delete, so undoing a dose reaches the other phones too.
+  Future<void> deleteLog(String id) => _db.update(
+        'logs',
+        {'deleted': 1, 'dirty': 1, 'updated_at': DateTime.now().millisecondsSinceEpoch},
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+
+  /// One log per dose: the id comes from the medicine and the dose time.
+  static String logId(String medicineId, DateTime scheduledAt) =>
+      '${medicineId}_${scheduledAt.millisecondsSinceEpoch}';
+
+  // Sync ----------------------------------------------------------------------
+
+  /// Rows changed on this phone and not yet sent, including deletions.
+  Future<List<SyncRow>> dirtyRows(String table) async {
+    final rows = await _db.query(table, where: 'dirty = 1');
+    return [for (final r in rows) SyncRow.fromRow(table, r)];
+  }
+
+  /// Marks a row sent, unless it changed again in the meantime.
+  Future<void> markClean(String table, String id, int updatedAt) => _db.update(
+        table,
+        {'dirty': 0},
+        where: 'id = ? AND updated_at = ?',
+        whereArgs: [id, updatedAt],
+      );
+
+  /// Marks everything for sending, e.g. after joining a family.
+  Future<void> markAllDirty() async {
+    for (final table in ['people', 'medicines', 'logs']) {
+      await _db.update(table, {'dirty': 1});
+    }
+  }
+
+  /// Stores a change from another phone if it is newer than what's here.
+  /// Returns whether anything changed.
+  Future<bool> applyRemote(SyncRow row) async {
+    final existing = await _db.query(
+      row.table,
+      columns: ['updated_at'],
+      where: 'id = ?',
+      whereArgs: [row.id],
+    );
+    if (existing.isNotEmpty && (existing.first['updated_at'] as int) >= row.updatedAt) {
+      return false;
+    }
+    await _db.insert(row.table, row.toRow(), conflictAlgorithm: ConflictAlgorithm.replace);
+    return true;
+  }
 
   // Settings ------------------------------------------------------------------
 
@@ -140,14 +207,15 @@ class Repository {
           'data': jsonEncode(json),
           'updated_at': updatedAt.millisecondsSinceEpoch,
           'deleted': 0,
+          'dirty': 1,
         },
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
 
-  // Soft delete, so a future sync can tell other phones about the deletion.
+  // Soft delete, so sync can tell other phones about the deletion.
   Future<void> _deleteDoc(String table, String id) => _db.update(
         table,
-        {'deleted': 1, 'updated_at': DateTime.now().millisecondsSinceEpoch},
+        {'deleted': 1, 'dirty': 1, 'updated_at': DateTime.now().millisecondsSinceEpoch},
         where: 'id = ?',
         whereArgs: [id],
       );
@@ -163,4 +231,43 @@ class Repository {
         at: DateTime.fromMillisecondsSinceEpoch(r['at'] as int),
         amount: (r['amount'] as num).toDouble(),
       );
+}
+
+/// A row in the shape it is sent between phones.
+class SyncRow {
+  const SyncRow({
+    required this.table,
+    required this.id,
+    required this.updatedAt,
+    required this.deleted,
+    required this.fields,
+  });
+
+  /// 'people', 'medicines' or 'logs'.
+  final String table;
+  final String id;
+  final int updatedAt;
+  final bool deleted;
+
+  /// For people and medicines: `{'data': jsonString}`. For logs: the log
+  /// columns.
+  final Map<String, Object?> fields;
+
+  static const _logFields = ['medicine_id', 'scheduled_at', 'status', 'at', 'amount'];
+
+  factory SyncRow.fromRow(String table, Map<String, Object?> r) => SyncRow(
+        table: table,
+        id: r['id'] as String,
+        updatedAt: r['updated_at'] as int,
+        deleted: (r['deleted'] as int) == 1,
+        fields: table == 'logs' ? {for (final f in _logFields) f: r[f]} : {'data': r['data']},
+      );
+
+  Map<String, Object?> toRow() => {
+        'id': id,
+        'updated_at': updatedAt,
+        'deleted': deleted ? 1 : 0,
+        'dirty': 0,
+        ...fields,
+      };
 }

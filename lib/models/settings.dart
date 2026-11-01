@@ -5,6 +5,7 @@ class AppSettings {
     this.followUpCount = 3,
     this.snoozeMinutes = 10,
     this.onboarded = false,
+    this.remindPeople,
   });
 
   /// 'system', 'en' or 'ar'.
@@ -18,12 +19,19 @@ class AppSettings {
   final int snoozeMinutes;
   final bool onboarded;
 
+  /// Whose medicines this phone reminds about; null means everyone. Kept per
+  /// phone (never synced), so each parent picks their own.
+  final Set<String>? remindPeople;
+
+  bool remindsFor(String personId) => remindPeople == null || remindPeople!.contains(personId);
+
   AppSettings copyWith({
     String? language,
     int? followUpMinutes,
     int? followUpCount,
     int? snoozeMinutes,
     bool? onboarded,
+    Set<String>? Function()? remindPeople,
   }) =>
       AppSettings(
         language: language ?? this.language,
@@ -31,6 +39,7 @@ class AppSettings {
         followUpCount: followUpCount ?? this.followUpCount,
         snoozeMinutes: snoozeMinutes ?? this.snoozeMinutes,
         onboarded: onboarded ?? this.onboarded,
+        remindPeople: remindPeople != null ? remindPeople() : this.remindPeople,
       );
 
   Map<String, dynamic> toJson() => {
@@ -39,6 +48,7 @@ class AppSettings {
         'followUpCount': followUpCount,
         'snoozeMinutes': snoozeMinutes,
         'onboarded': onboarded,
+        'remindPeople': remindPeople?.toList(),
       };
 
   factory AppSettings.fromJson(Map<String, dynamic>? j) {
@@ -49,6 +59,7 @@ class AppSettings {
       followUpCount: j['followUpCount'] as int? ?? 3,
       snoozeMinutes: j['snoozeMinutes'] as int? ?? 10,
       onboarded: j['onboarded'] as bool? ?? false,
+      remindPeople: (j['remindPeople'] as List?)?.cast<String>().toSet(),
     );
   }
 }
